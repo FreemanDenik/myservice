@@ -17,7 +17,7 @@ public class InfoController {
     }
 
 
-    @GetMapping("/go")
+    @GetMapping("/current-price")
     public String getInfo() {
 
         return infoClient.latest(app_id);
