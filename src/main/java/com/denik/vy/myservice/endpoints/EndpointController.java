@@ -24,12 +24,12 @@ public class EndpointController {
     private final XchangeClient xchangeClient;
     private final GiphyClient giphyClient;
     private final RestTemplate restTemplate;
-    // Currency
+    // xchange
     @Value("${my.xchange.app-id}")
     private String xchangeAppId;
     @Value("${my.xchange.base-code}")
     private String xchangeBaseCode;
-    // GIF
+    // giphy
     private EmRich emRich;
     @Value("${my.giphy.app-id}")
     private String giphyAppId;
@@ -51,16 +51,16 @@ public class EndpointController {
 
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
-        Double yesterdayPrices = xchangeClient.historical(xchangeAppId, yesterday.toString(), xchangeBaseCode).getBody().rates.entrySet().stream()
+        Double yesterdayPrice = xchangeClient.historical(xchangeAppId, yesterday.toString(), xchangeBaseCode).getBody().rates.entrySet().stream()
                 .filter(w -> w.getKey().equals(currencyCode))
                 .map(w -> w.getValue())
                 .findFirst().get();
-        Double latestPrices = xchangeClient.latest(xchangeAppId, xchangeBaseCode).getBody().rates.entrySet().stream()
+        Double latestPrice = xchangeClient.latest(xchangeAppId, xchangeBaseCode).getBody().rates.entrySet().stream()
                 .filter(w -> w.getKey().equals(currencyCode))
                 .map(w -> w.getValue())
                 .findFirst().get();
 
-        switch (Double.compare(latestPrices, yesterdayPrices)) {
+        switch (Double.compare(latestPrice, yesterdayPrice)) {
             case -1:
                 emRich = EmRich.POOR;
                 break;
