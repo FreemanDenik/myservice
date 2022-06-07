@@ -1,7 +1,7 @@
 package com.denik.vy.myservice.endpoints;
 
-import com.denik.vy.myservice.clients.GifClient;
-import com.denik.vy.myservice.clients.InfoClient;
+import com.denik.vy.myservice.clients.GiphyClient;
+import com.denik.vy.myservice.clients.XchangeClient;
 import com.denik.vy.myservice.enums.EmRich;
 import com.denik.vy.myservice.models.GifModel;
 
@@ -15,43 +15,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @Component
 @RestControllerEndpoint(id = "compare-prices")
 public class EndpointController {
 
-    private final InfoClient infoClient;
-    private final GifClient gifClient;
+    private final XchangeClient xchangeClient;
+    private final GiphyClient giphyClient;
     private final RestTemplate restTemplate;
     // Currency
-    @Value("${my.openexchangerates.app-id}")
-    private String currencyApp_id;
-    @Value("${my.openexchangerates.compare-currency-code}")
-    private String compareCurrencyCode;
+    @Value("${my.xchange.app-id}")
+    private String xchangeAppId;
+    @Value("${my.xchange.base-code}")
+    private String xchangeBaseCode;
     // GIF
     private EmRich emRich;
-    @Value("${my.developers.app-id}")
-    private String gifApp_id;
-    @Value("${my.developers.rating}")
-    private String gifRating;
+    @Value("${my.giphy.app-id}")
+    private String giphyAppId;
+    @Value("${my.giphy.rating}")
+    private String giphyRating;
 
-    public EndpointController(InfoClient infoClient, GifClient gifClient, RestTemplate restTemplate) {
-        this.infoClient = infoClient;
-        this.gifClient = gifClient;
+    public EndpointController(XchangeClient xchangeClient, GiphyClient giphyClient, RestTemplate restTemplate) {
+        this.xchangeClient = xchangeClient;
+        this.giphyClient = giphyClient;
         this.restTemplate = restTemplate;
 
     }
-
+    @GetMapping(value = "/currencies")
+    public @ResponseBody String currencies() {
+            return xchangeClient.currencies().getBody().entrySet().stream().map(w->w.getKey()).collect(Collectors.joining(", "));
+    }
     @GetMapping(value = "/{currencyCode}", produces = MediaType.IMAGE_GIF_VALUE)
-    public @ResponseBody byte[] customEndPoint(@PathVariable String currencyCode) {
+    public @ResponseBody byte[] currenciesCode(@PathVariable String currencyCode) {
 
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
-        Double yesterdayPrices = infoClient.historical(currencyApp_id, yesterday.toString(), compareCurrencyCode).getBody().rates.entrySet().stream()
+        Double yesterdayPrices = xchangeClient.historical(xchangeAppId, yesterday.toString(), xchangeBaseCode).getBody().rates.entrySet().stream()
                 .filter(w -> w.getKey().equals(currencyCode))
                 .map(w -> w.getValue())
                 .findFirst().get();
-        Double latestPrices = infoClient.latest(currencyApp_id, compareCurrencyCode).getBody().rates.entrySet().stream()
+        Double latestPrices = xchangeClient.latest(xchangeAppId, xchangeBaseCode).getBody().rates.entrySet().stream()
                 .filter(w -> w.getKey().equals(currencyCode))
                 .map(w -> w.getValue())
                 .findFirst().get();
@@ -64,10 +68,10 @@ public class EndpointController {
                 emRich = EmRich.RICH;
                 break;
             default:
-                emRich = EmRich.WITHOUT;
+                emRich = EmRich.NO_CHANGE;
         }
 
-        ResponseEntity<GifModel> responseGif = gifClient.gifs(gifApp_id, emRich.toString(), gifRating);
+        ResponseEntity<GifModel> responseGif = giphyClient.gifs(giphyAppId, emRich.toString(), giphyRating);
         byte[] arrByte = restTemplate.getForObject(responseGif.getBody().url(), byte[].class);
 
         return arrByte;
