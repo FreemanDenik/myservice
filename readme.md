@@ -7,7 +7,7 @@
     </li>
     <li>
         <p>Сравнить валюты и получить gif контент в соответствии, богат, беден или ничего не изменилось</p>
-        <p>В адресной строке стоит BTC т.е. сравниваем биткоин</p>
+        <p>В адресной строке стоит BTC т.е. сравниваем биткоином</p>
         <a href="http://localhost:8080/actuator/compare-prices/BTC">http://localhost:8080/actuator/compare-prices/BTC</a>
     </li>
 </ul>
