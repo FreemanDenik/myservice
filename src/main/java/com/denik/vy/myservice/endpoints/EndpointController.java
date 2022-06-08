@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Component
 @RestControllerEndpoint(id = "compare-prices")
 public class EndpointController {
-
     private final XchangeClient xchangeClient;
     private final GiphyClient giphyClient;
     private final RestTemplate restTemplate;
@@ -35,7 +34,6 @@ public class EndpointController {
     private String giphyAppId;
     @Value("${my.giphy.rating}")
     private String giphyRating;
-
     public EndpointController(XchangeClient xchangeClient, GiphyClient giphyClient, RestTemplate restTemplate) {
         this.xchangeClient = xchangeClient;
         this.giphyClient = giphyClient;
@@ -76,5 +74,4 @@ public class EndpointController {
 
         return arrByte;
     }
-
 }
