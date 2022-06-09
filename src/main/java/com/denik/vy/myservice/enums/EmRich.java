@@ -2,8 +2,8 @@ package com.denik.vy.myservice.enums;
 
 public enum EmRich {
 
-    NO_CHANGE("no"), RICH("rich"), POOR("broke");
-    private String title;
+    NO("no"), RICH("rich"), POOR("broke");
+    private final String title;
 
     EmRich(String title) {
         this.title = title;

@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Objects;
 @Component
 @RestControllerEndpoint(id = "currencies")
 public class CurrencyEndpoint {
@@ -18,6 +19,7 @@ public class CurrencyEndpoint {
 
     @GetMapping
     public @ResponseBody String currencies() {
-        return xchangeClient.currencies().getBody().entrySet().stream().map(w->w.getKey()).collect(Collectors.joining(", "));
+        Map<String, String> currencies = Objects.requireNonNull(xchangeClient.currencies().getBody(), "getBody return null currencies method");
+        return String.join(", ", currencies.keySet());
     }
 }
