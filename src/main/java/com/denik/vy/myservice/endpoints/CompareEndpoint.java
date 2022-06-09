@@ -5,6 +5,8 @@ import com.denik.vy.myservice.clients.XchangeClient;
 import com.denik.vy.myservice.enums.EmRich;
 import com.denik.vy.myservice.models.GifModel;
 
+import com.denik.vy.myservice.models.GifRandomModel;
+import com.denik.vy.myservice.models.GifSearchModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
 import org.springframework.http.*;
@@ -33,6 +35,8 @@ public class CompareEndpoint {
     private String giphyAppId;
     @Value("${my.giphy.rating}")
     private String giphyRating;
+    @Value("${my.giphy.limit}")
+    private int giphyLimit;
     public CompareEndpoint(XchangeClient xchangeClient, GiphyClient giphyClient, RestTemplate restTemplate) {
         this.xchangeClient = xchangeClient;
         this.giphyClient = giphyClient;
@@ -40,7 +44,7 @@ public class CompareEndpoint {
     }
 
     @GetMapping(value = "/{currencyCode}", produces = MediaType.IMAGE_GIF_VALUE)
-    public @ResponseBody byte[] currenciesCode(@PathVariable String currencyCode) {
+    public @ResponseBody ResponseEntity currenciesCode(@PathVariable String currencyCode) {
 
         LocalDate yesterday = LocalDate.now().minusDays(1);
 
@@ -63,10 +67,12 @@ public class CompareEndpoint {
             default:
                 emRich = EmRich.NO_CHANGE;
         }
+        //ResponseEntity<GifRandomModel> gifRandomModel = giphyClient.gifRandom(giphyAppId, emRich.toString(), giphyRating);
+        ResponseEntity<GifSearchModel> gifSearchModel = giphyClient.gifSource(giphyAppId, emRich.toString(), giphyLimit, giphyRating);
 
-        ResponseEntity<GifModel> responseGif = giphyClient.gifs(giphyAppId, emRich.toString(), giphyRating);
-        byte[] arrByte = restTemplate.getForObject(responseGif.getBody().url(), byte[].class);
+        String gifUrl = gifSearchModel.getBody().getRandomUrl(giphyLimit);
+        byte[] arrByte = restTemplate.getForObject(gifUrl, byte[].class);
 
-        return arrByte;
+        return new ResponseEntity<>(arrByte, HttpStatus.OK);
     }
 }
