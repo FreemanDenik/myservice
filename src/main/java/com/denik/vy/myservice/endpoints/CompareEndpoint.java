@@ -65,12 +65,10 @@ public class CompareEndpoint {
             case 1 -> emRich = EmRich.RICH;
             default -> emRich = EmRich.NO;
         }
-        //ResponseEntity<GifRandomModel> gifRandomModel = giphyClient.gifRandom(giphyAppId, emRich.toString(), giphyRating);
-        ResponseEntity<GifSearchModel> gifSearchModel = giphyClient.gifSource(giphyAppId, emRich.toString(), giphyLimit, giphyRating);
+        ResponseEntity<GifSearchModel> gifSearchModel = Objects.requireNonNull(giphyClient.gifSource(giphyAppId, emRich.toString(), giphyLimit, giphyRating), "getBody return null gifSource method");
 
         String gifUrl = gifSearchModel.getBody().getRandomUrl(giphyLimit);
-        byte[] arrByte = restTemplate.getForObject(gifUrl, byte[].class);
 
-        return arrByte;
+        return restTemplate.getForObject(gifUrl, byte[].class);
     }
 }

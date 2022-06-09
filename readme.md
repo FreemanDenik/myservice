@@ -1,4 +1,18 @@
+<h2>Gradle</h2>
+<hr>
+<p>Используем Gradle Wrapper</p>
+<p>Доступ к фазам Gradle у нас будет через gradlew</p>
+<ul>
+    <li>
+        <p><b>.\gradlew build</b>: билд проекта</p>
+        <p><b>.\gradlew jar</b>: билд jar архива </p>
+        <p><b>.\gradlew bootRun</b>: запустить проект из Gradle</p>
+        <p><b>.\gradlew wrapper --gradle-version 7.4.2</b>: обновить gradle до версии 7.4.2 </p>
+    </li>
+</ul>
+
 <h2>Конечные точки</h2>
+<hr>
 <b>По умолчанию сравнение с USD (доллар)</b><br>
 <b>Изменить можно в конфиг файле application.properties: my.xchange.base-code</b>
 
@@ -15,8 +29,9 @@
   </li>
 </ul>
 
-<hr>
+
 <h2>Уровни рейтинга gif контента</h2>
+<hr>
 <b>По умолчанию рейтинг PG</b><br>
 <b>Изменить можно в конфиг файле application.properties: my.giphy.rating</b>
 
