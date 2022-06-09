@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.stream.Collectors;
 
 @Component
 @RestControllerEndpoint(id = "compare-prices")
-public class EndpointController {
+public class CompareEndpoint {
     private final XchangeClient xchangeClient;
     private final GiphyClient giphyClient;
     private final RestTemplate restTemplate;
@@ -34,16 +33,12 @@ public class EndpointController {
     private String giphyAppId;
     @Value("${my.giphy.rating}")
     private String giphyRating;
-    public EndpointController(XchangeClient xchangeClient, GiphyClient giphyClient, RestTemplate restTemplate) {
+    public CompareEndpoint(XchangeClient xchangeClient, GiphyClient giphyClient, RestTemplate restTemplate) {
         this.xchangeClient = xchangeClient;
         this.giphyClient = giphyClient;
         this.restTemplate = restTemplate;
+    }
 
-    }
-    @GetMapping(value = "/currencies")
-    public @ResponseBody String currencies() {
-            return xchangeClient.currencies().getBody().entrySet().stream().map(w->w.getKey()).collect(Collectors.joining(", "));
-    }
     @GetMapping(value = "/{currencyCode}", produces = MediaType.IMAGE_GIF_VALUE)
     public @ResponseBody byte[] currenciesCode(@PathVariable String currencyCode) {
 

@@ -1,20 +1,25 @@
 <h2>Конечные точки</h2>
+<b>По умолчанию сравнение с USD (доллар)</b><br>
+<b>Изменить можно в конфиг файле application.properties: my.xchange.base-code</b>
+
 <p>Все валюты сравниваются с своим вчерашним значением по отношению к USD т.е. доллару</p>
 <ul>
     <li>
         <p>Получить список валют допустимых к сравнению</p>
-        <a href="http://localhost:8080/actuator/compare-prices/currencies">http://localhost:8080/actuator/compare-prices/currencies</a>
+        <a href="http://localhost:8080/actuator/currencies">http://localhost:8080/actuator/currencies</a>
     </li>
     <li>
         <p>Сравнить валюты и получить gif контент в соответствии, богат, беден или ничего не изменилось</p>
-        <p>В адресной строке стоит BTC т.е. сравниваем биткоином</p>
+        <p>В адресной строке, что ниже сравниваем доллар с биткоином т.е. BTC</p>
         <a href="http://localhost:8080/actuator/compare-prices/BTC">http://localhost:8080/actuator/compare-prices/BTC</a>
-    </li>
+  </li>
 </ul>
 
-
+<hr>
 <h2>Уровни рейтинга gif контента</h2>
-<h3>настройка: my.giphy.rating</h3>
+<b>По умолчанию рейтинг PG</b><br>
+<b>Изменить можно в конфиг файле application.properties: my.giphy.rating</b>
+
 <ul>
     <li><span>G</span> : Содержит изображения, которые широко признаны уместными и обычно видны людям в общественных местах.</li>
     <li><span>PG</span> : Содержит изображения, которые обычно видны в общедоступной среде, но не так широко распространены, как это уместно.</li>
