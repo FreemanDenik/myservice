@@ -14,6 +14,7 @@ import java.util.Map;
 public interface XchangeClient {
     @GetMapping("/${my.xchange.currencies}")
     ResponseEntity<Map<String, String>> currencies();
+
     @GetMapping("/${my.xchange.latest}")
     ResponseEntity<Info> latest(@RequestParam("app_id") String id, @RequestParam("base") String currency);
 

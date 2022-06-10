@@ -27,8 +27,9 @@ public class GiphyClientTests {
     private String giphyRating;
     @Value("${my.giphy.limit}")
     private int giphyLimit;
+
     @Test
-    public void gifs(){
+    public void gifs() {
         String url = "http://image.gif";
         GifSearchModel searchModel = new GifSearchModel();
 
@@ -45,8 +46,8 @@ public class GiphyClientTests {
         Gson json = new Gson();
 
         Map data = json.fromJson(response.getBody().getModel().get(0).toString(), Map.class);
-        Map images = (Map)data.get("images");
-        Map downsized =  (Map)images.get("downsized");
+        Map images = (Map) data.get("images");
+        Map downsized = (Map) images.get("downsized");
         String gifUrl = downsized.get("url").toString();
 
         Assert.isTrue(gifUrl.equals(url), "not valid url");

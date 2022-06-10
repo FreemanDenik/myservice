@@ -2,12 +2,19 @@
 <p>Используем Gradle Wrapper</p>
 <p>Доступ к фазам Gradle у нас будет через gradlew</p>
 <ul>
-    <li>
-        <p><b>.\gradlew build</b>: билд проекта</p>
-        <p><b>.\gradlew jar</b>: билд jar архива </p>
-        <p><b>.\gradlew bootRun</b>: запустить проект из Gradle</p>
-        <p><b>.\gradlew wrapper --gradle-version 7.4.2</b>: обновить gradle до версии 7.4.2 </p>
-    </li>
+         <li><p><b>.\gradlew wrapper --gradle-version 7.4.2</b>: обновить gradle до версии 7.4.2 </p>  </li>
+        <li><p><b>.\gradlew build</b>: билд проекта</p></li>
+        <li><p><b>.\gradlew jar</b>: билд jar архива </p></li>
+        <li><p><b>.\gradlew bootRun</b>: запустить проект из Gradle</p></li>
+        <li>
+            <p>запустить jar архив из командной строки</p>
+            <ul>
+                <li><p><b>.\gradlew jar</b>: архивация проекта</p></li>
+                <li>в командной строке перейти в папку <b>[папка проекта]/build/libs/</b></li>
+                <li>вызвать команду выполнения jar <b>java -jar myservice-0.0.1-SNAPSHOT.jar</b></li>
+            </ul>
+        </li>
+       
 </ul>
 
 <h2>Конечные точки</h2>
@@ -21,9 +28,9 @@
         <a href="http://localhost:8080/actuator/currencies">http://localhost:8080/actuator/currencies</a>
     </li>
     <li>
-        <p>Сравнить валюты и получить gif контент в соответствии, богат, беден или ничего не изменилось</p>
+        <p>Сравнить валюты и получить gif контент в соответствии rich, broke</p>
         <p>В адресной строке, что ниже сравниваем доллар с биткоином т.е. BTC</p>
-        <a href="http://localhost:8080/actuator/compare-prices/BTC">http://localhost:8080/actuator/compare-prices/BTC</a>
+        <a href="http://localhost:8080/actuator/compare/BTC">http://localhost:8080/actuator/compare/BTC</a>
   </li>
 </ul>
 

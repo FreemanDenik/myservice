@@ -19,10 +19,9 @@ public class GifSearchModel {
         return model;
     }
 
-    public String getRandomUrl(int count){
+    public String getRandomUrl(int count) {
         Random rand = new Random();
-        return ((Map)((Map)this.model.get(rand.nextInt(count)).get("images")).get("downsized")).get("url").toString();
-
+        return ((Map) ((Map) this.model.get(rand.nextInt(count)).get("images")).get("downsized")).get("url").toString();
     }
 
 }

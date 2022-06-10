@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Component
-@Endpoint(id="compare-prices")
+@Endpoint(id = "compare")
 public class CompareEndpoint {
     private final XchangeClient xchangeClient;
     private final GiphyClient giphyClient;
@@ -45,9 +45,9 @@ public class CompareEndpoint {
         this.restTemplate = restTemplate;
         this.emRich = EmRich.NO;
     }
-
+    // Отправляем код валюты и получаем GIF в соответствии, rich, broke
     @ReadOperation(produces = MediaType.IMAGE_GIF_VALUE)
-    public @ResponseBody byte[] compare(@Selector String currencyCode) {
+    public byte[] compare(@Selector String currencyCode) {
 
         LocalDate yesterdayTime = LocalDate.now().minusDays(1);
         Info yesterday = Objects.requireNonNull(xchangeClient.historical(xchangeAppId, yesterdayTime.toString(), xchangeBaseCode).getBody(), "getBody return null historical method");
