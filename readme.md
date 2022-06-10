@@ -29,7 +29,7 @@
     </li>
     <li>
         <p>Сравнить валюты и получить gif контент в соответствии rich, broke</p>
-        <p>В адресной строке, что ниже сравниваем доллар с биткоином т.е. BTC</p>
+        <p>В адресной строке, что ниже сравниваем биткоином т.е. BTC</p>
         <a href="http://localhost:8080/actuator/compare/BTC">http://localhost:8080/actuator/compare/BTC</a>
   </li>
 </ul>
