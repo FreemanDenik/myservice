@@ -11,7 +11,7 @@
             <ul>
                 <li><p><b>.\gradlew jar</b>: архивация проекта</p></li>
                 <li>в командной строке перейти в папку <b>[папка проекта]/build/libs/</b></li>
-                <li>вызвать команду выполнения jar <b>java -jar myservice-0.0.1-SNAPSHOT.jar</b></li>
+                <li>вызвать команду выполнения <b>java -jar myservice-0.0.1-SNAPSHOT.jar</b></li>
             </ul>
         </li>
        
