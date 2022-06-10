@@ -3,15 +3,15 @@ package com.denik.vy.myservice.endpoints;
 import com.denik.vy.myservice.clients.GiphyClient;
 import com.denik.vy.myservice.clients.XchangeClient;
 import com.denik.vy.myservice.enums.EmRich;
-
 import com.denik.vy.myservice.models.GifSearchModel;
 import com.denik.vy.myservice.models.Info;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
-import org.springframework.http.*;
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.annotation.Selector;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Component
-@RestControllerEndpoint(id = "compare-prices")
+@Endpoint(id="compare-prices")
 public class CompareEndpoint {
     private final XchangeClient xchangeClient;
     private final GiphyClient giphyClient;
@@ -38,15 +38,16 @@ public class CompareEndpoint {
     private String giphyRating;
     @Value("${my.giphy.limit}")
     private int giphyLimit;
+
     public CompareEndpoint(XchangeClient xchangeClient, GiphyClient giphyClient, RestTemplate restTemplate) {
         this.xchangeClient = xchangeClient;
         this.giphyClient = giphyClient;
         this.restTemplate = restTemplate;
-        emRich = EmRich.NO;
+        this.emRich = EmRich.NO;
     }
 
-    @GetMapping(value = "/{currencyCode}", produces = MediaType.IMAGE_GIF_VALUE)
-    public @ResponseBody byte[] currenciesCode(@PathVariable String currencyCode) {
+    @ReadOperation(produces = MediaType.IMAGE_GIF_VALUE)
+    public @ResponseBody byte[] compare(@Selector String currencyCode) {
 
         LocalDate yesterdayTime = LocalDate.now().minusDays(1);
         Info yesterday = Objects.requireNonNull(xchangeClient.historical(xchangeAppId, yesterdayTime.toString(), xchangeBaseCode).getBody(), "getBody return null historical method");

@@ -1,5 +1,4 @@
-<h2>Gradle</h2>
-<hr>
+<h2>Gradle, билд и запуск проекта</h2>
 <p>Используем Gradle Wrapper</p>
 <p>Доступ к фазам Gradle у нас будет через gradlew</p>
 <ul>
@@ -12,7 +11,6 @@
 </ul>
 
 <h2>Конечные точки</h2>
-<hr>
 <b>По умолчанию сравнение с USD (доллар)</b><br>
 <b>Изменить можно в конфиг файле application.properties: my.xchange.base-code</b>
 
@@ -31,7 +29,6 @@
 
 
 <h2>Уровни рейтинга gif контента</h2>
-<hr>
 <b>По умолчанию рейтинг PG</b><br>
 <b>Изменить можно в конфиг файле application.properties: my.giphy.rating</b>
 

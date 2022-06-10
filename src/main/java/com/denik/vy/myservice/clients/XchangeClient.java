@@ -15,10 +15,10 @@ public interface XchangeClient {
     @GetMapping("/${my.xchange.currencies}")
     ResponseEntity<Map<String, String>> currencies();
     @GetMapping("/${my.xchange.latest}")
-    ResponseEntity<Info> latest(@RequestParam String app_id, @RequestParam("base") String currency);
+    ResponseEntity<Info> latest(@RequestParam("app_id") String id, @RequestParam("base") String currency);
 
     @GetMapping("/${my.xchange.historical}/{date}.json")
-    ResponseEntity<Info> historical(@RequestParam String app_id, @PathVariable String date, @RequestParam("base") String currency);
+    ResponseEntity<Info> historical(@RequestParam("app_id") String id, @PathVariable String date, @RequestParam("base") String currency);
 
 
 }

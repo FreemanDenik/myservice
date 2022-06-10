@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @SpringBootTest
 public class XchangeClientTests {
@@ -41,7 +42,7 @@ public class XchangeClientTests {
 
         Assert.isTrue(HttpStatus.OK == response.getStatusCode(), "invalid currencies post");
 
-        Long count = response.getBody().entrySet().stream().count();
+        long count = Objects.requireNonNull(response.getBody()).entrySet().size();
         Map.Entry<String, String> AED = response.getBody().entrySet().stream().findFirst().get();
         Map.Entry<String, String> ZWL = response.getBody().entrySet().stream().skip(count-1).findFirst().get();
 
@@ -72,7 +73,7 @@ public class XchangeClientTests {
 
         Assert.isTrue(HttpStatus.OK == response.getStatusCode(), "invalid latest post");
 
-        Long count = response.getBody().rates.entrySet().stream().count();
+        long count = Objects.requireNonNull(response.getBody()).rates.entrySet().size();
         Map.Entry<String, Double> AED = response.getBody().rates.entrySet().stream().findFirst().get();
         Map.Entry<String, Double> ZWL = response.getBody().rates.entrySet().stream().skip(count-1).findFirst().get();
 
@@ -102,7 +103,7 @@ public class XchangeClientTests {
 
         Assert.isTrue(HttpStatus.OK == response.getStatusCode(), "invalid historical post");
 
-        Long count = response.getBody().rates.entrySet().stream().count();
+        long count = Objects.requireNonNull(response.getBody()).rates.entrySet().size();
         Map.Entry<String, Double> AED = response.getBody().rates.entrySet().stream().findFirst().get();
         Map.Entry<String, Double> ZWL = response.getBody().rates.entrySet().stream().skip(count-1).findFirst().get();
 
